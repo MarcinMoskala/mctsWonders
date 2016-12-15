@@ -12,8 +12,7 @@ data class GameState(
 }
 
 fun getAllCardsRandomized(age: Int): List<Card> =
-        Card.getAllAgeCards(age)
-                .shuffle()
+        Card.getAllAgeCards(age).shuffle()
 
 const val roundsInAge = 6
 const val ages = 3

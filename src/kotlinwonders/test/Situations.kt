@@ -4,7 +4,7 @@ import kotlinwonders.data.Card
 import kotlinwonders.data.GameState
 import kotlinwonders.data.PlayerState
 import kotlinwonders.data.Wonder
-import kotlinwonders.player.mcts.VisibleState
+import kotlinwonders.VisibleState
 
 object StartGameSituation {
     val visibleState: VisibleState

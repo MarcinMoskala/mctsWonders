@@ -9,7 +9,6 @@ import pl.marcinmoskala.kotlindownders.utills.split
 
 fun getStartPlayerStates(i: Int): List<PlayerState> = (0..(i - 1)).map { PlayerState(id = it, gold = 3, wonder = getRandomWonder()) }
 
-
 fun getSplittedRandomStartCards(age: Int, playersNum: Int): List<List<Card>> =
         getAllCardsRandomized(age)
                 .split(playersNum)

@@ -1,5 +1,6 @@
 package kotlinwonders.player.mcts
 
+import kotlinwonders.VisibleState
 import kotlinwonders.data.Action
 import kotlinwonders.data.Card
 import kotlinwonders.data.GameState
@@ -14,11 +15,9 @@ class MctsPlayer(val simulationsPerBranch: Int, val endCalcFun: (Int)->Boolean) 
             startMcts(gameState, mapOf(p.id to cards), p.id)
 
     fun startMcts(gameState: GameState, knownCards: Map<Int, List<Card>>, id: Int): Action {
-        val idsOrdinary = listOf(id) + (gameState.playersStates.map { id } - id)
-        val playersNum = gameState.playersStates.size
-        var tree: DecisionTree = Leaf(mapOf(), VisibleState(gameState, knownCards), zeros(playersNum))
+        var tree: DecisionTree = Leaf(VisibleState(gameState, knownCards))
         while (!endCalcFun(tree.gamesPlayed())) {
-            tree = tree.improve(idsOrdinary, simulationsPerBranch)
+            tree = tree.improve(simulationsPerBranch)
         }
         return tree.chooseBestDecision(id)
     }

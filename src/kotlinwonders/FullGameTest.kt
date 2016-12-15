@@ -5,7 +5,7 @@ import kotlinwonders.functions.getAllPossibleActionsForPlayerState
 import kotlinwonders.functions.getAllPossiblePlayerCards
 import kotlinwonders.functions.getNextGameState
 import kotlinwonders.functions.removeUsedCards
-import kotlinwonders.player.mcts.VisibleState
+import kotlinwonders.VisibleState
 import kotlinwonders.test.assertTheSame
 import org.testng.annotations.Test
 import pl.marcinmoskala.kotlindownders.functions.giveCardsToNextPerson
@@ -40,7 +40,7 @@ class FullGameTest {
         assert(gameState.playersStates[2].gold == 2) { "Player spend gold to buy card" }
 
         actions = getAllPossibleActionsForPlayerState(0, VisibleState(gameState, knownCards))
-        assert(BuyCardAction(cardByName("BARRACKS"), mapOf(1 to 2)) in actions) { "In $actions \nthere should be ${BuyCardAction(cardByName("BARRACKS"), mapOf(1 to 2))}. \n All actions are $actions" }
+        assert(BuyCardAction(cardByName("BARRACKS"), mapOf(1 to 2)) in actions) { "In $actions \nthere should be ${BuyCardAction(cardByName("BARRACKS"), mapOf(1 to 2))}. \n All actionsPlanned are $actions" }
         assert(BuyCardAction(cardByName("BARRACKS"), mapOf(2 to 2)) in actions) { "In $actions \nthere should be ${BuyCardAction(cardByName("BARRACKS"), mapOf(2 to 2))}" }
         nextTurn(TakeCardAction(cardByName("GUARD TOWER")), TakeCardAction(cardByName("ORE VEIN")), TakeCardAction(cardByName("CLAY PIT")))
     }

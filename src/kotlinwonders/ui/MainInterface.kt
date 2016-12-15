@@ -9,7 +9,7 @@ import kotlinwonders.data.GameState
 import kotlinwonders.data.getStartGameState
 import kotlinwonders.functions.*
 import kotlinwonders.player.mcts.MctsPlayer
-import kotlinwonders.player.mcts.VisibleState
+import kotlinwonders.VisibleState
 import kotlinwonders.player.mcts.toNonIndexedList
 import pl.marcinmoskala.kotlindownders.functions.giveCardsToNextPerson
 import kotlin.concurrent.thread
