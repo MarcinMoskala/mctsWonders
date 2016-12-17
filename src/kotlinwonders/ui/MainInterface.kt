@@ -52,7 +52,7 @@ class ChooseMultipleView : Application() {
 
     private fun startActionCalculation(gameState: GameState, knownCards: Map<Int, List<Card>>, playerId: Int, endCalcFun: (Int)->Boolean, actionCallback: (Action)->Unit) {
         thread {
-            val action = MctsPlayer(10, endCalcFun).startMcts(gameState, knownCards, playerId)
+            val action = MctsPlayer(1, endCalcFun).startMcts(gameState, knownCards, playerId)
             Platform.runLater { actionCallback(action) }
         }
     }
@@ -77,8 +77,7 @@ class ChooseMultipleView : Application() {
     private fun askForCards(playerId: Int, gameState: GameState, knownCards: Map<Int, List<Card>>, callback: (Map<Int, List<Card>>) -> Unit) {
         if (knownCards[playerId].isNullOrEmpty()) {
             val options = getAllPossiblePlayerCards(playerId, gameState, knownCards)
-            val howMuch = cardsNumInRound(gameState.round)
-            openMultipleChooseWindow("Jakie masz karty?", options, howMuch) { callback(knownCards + (playerId to it)) }
+            openMultipleChooseWindow("Jakie masz karty?", options, gameState.cardsOnHands) { callback(knownCards + (playerId to it)) }
         } else
             callback(knownCards)
     }

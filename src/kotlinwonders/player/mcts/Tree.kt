@@ -18,7 +18,7 @@ data class Leaf(
         override val gameResults: List<Int> = zeros(visibleState.playersNum)
 ) : DecisionTree {
 
-    override fun toString(): String = "A: $actionsPlanned, GR: $gameResults, GP: ${gamesPlayed()}"
+//    override fun toString(): String = "GR: $gameResults, GP: ${gamesPlayed()}, A: $actionsPlanned"
     override fun gamesWon(id: Int): Int = gameResults[id]
     override fun gamesPlayed(): Int = gameResults.sum()
 }
@@ -30,7 +30,7 @@ data class BranchDecisionTree(
         var kids: Map<Action, DecisionTree>
 ) : DecisionTree {
 
-    override fun toString(): String = "Branch(GR: ${gamesWon(1)}, GP: ${gamesPlayed()}, Kids: \n${kids.toList().joinToString(separator = "\n", transform = { "${it.first}: ${it.second}" })})"
+    override fun toString(): String = "Branch(GR: ${gamesWon(1)}, GP: ${gamesPlayed()}, Kids: \n${kids.toList().joinToString(separator = "\n", transform = { "    ${it.first}: ${it.second}" })})"
     override fun gamesWon(id: Int): Int = gameResults[id] + kids.map { it.value.gamesWon(id) }.sum()
     override fun gamesPlayed(): Int = gameResults.sum() + kids.map { it.value.gamesPlayed() }.sum()
 }

@@ -8,7 +8,10 @@ data class GameState(
         val playersStates: List<PlayerState>,
         val age: Int = 1,
         val round: Int = 1) {
-    val isFinal: Boolean = age == ages && round == roundsInAge
+    val isFinal: Boolean
+        get() = age == ages && round == roundsInAge
+    val cardsOnHands: Int
+        get() = 8 - round
 }
 
 fun getAllCardsRandomized(age: Int): List<Card> =

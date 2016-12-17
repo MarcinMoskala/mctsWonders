@@ -7,5 +7,5 @@ data class VisibleState(
         val gameState: GameState,
         val knownCards: Map<Int, List<Card>>) {
     val playersNum = gameState.playersStates.size
-    val playersIds = (1..(playersNum))
+    val playersIds = gameState.playersStates.map { it.id }
 }

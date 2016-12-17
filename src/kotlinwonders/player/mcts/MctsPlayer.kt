@@ -15,6 +15,7 @@ class MctsPlayer(val simulationsPerBranch: Int, val endCalcFun: (Int)->Boolean) 
             startMcts(gameState, mapOf(p.id to cards), p.id)
 
     fun startMcts(gameState: GameState, knownCards: Map<Int, List<Card>>, id: Int): Action {
+        require(knownCards.all { it.value.size <= 8 - gameState.round }) { "GameState: $gameState, Known Cards: $knownCards" }
         var tree: DecisionTree = Leaf(VisibleState(gameState, knownCards))
         while (!endCalcFun(tree.gamesPlayed())) {
             tree = tree.improve(simulationsPerBranch)

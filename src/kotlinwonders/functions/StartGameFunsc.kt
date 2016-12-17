@@ -24,9 +24,13 @@ class GameStateTest {
 
     @Test
     fun testRandomStartCards() {
-        assert(Card.age1.size == 21)
-        assert(Card.age2.size == 21)
-        assert(Card.age3.size == 21, { "Jest ${Card.age3.size} a powinno być 21" })
+        assert(Card.age1.size == 21) { "Jest ${Card.age3.size} a powinno być 21" }
+        assert(Card.age2.size == 21) { "Jest ${Card.age3.size} a powinno być 21" }
+        assert(Card.age3.size == 21) { "Jest ${Card.age3.size} a powinno być 21" }
+    }
+
+    @Test
+    fun testSplittedRandomCardsNum() {
         (1..3).forEach { assert(getSplittedRandomStartCards(it, 3).all { it.size == 7 }) }
     }
 }
