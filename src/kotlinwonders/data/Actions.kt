@@ -60,7 +60,7 @@ class GetTakeCardActionsTest {
 
     @Test
     fun testOptimizeBuyCardAction() {
-        val card = Card("Some")
+        val card = Card(name = "Some")
         val action = BuyCardOptimizableAction(card, setOf(mapOf(1 to listOf(CLAY), 2 to listOf(ORE)), mapOf(1 to listOf(CLAY, CLAY))))
         val playerState = PlayerState(gold = 3, buyCost = mapOf(1 to mapOf(CLAY to 1)))
         assertEquals(action.optimized(playerState), BuyCardAction(card, mapOf(1 to 2)))

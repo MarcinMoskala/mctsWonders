@@ -49,9 +49,9 @@ private fun <T> T.displayText(): String {
 fun Action.display() = when (this) {
     is BurnCardAction -> "Akcja spalenia ${cardName(card)}"
     is TakeCardAction -> "Akcja wzięcia ${cardName(card)}"
-    is BuyCardAction -> "Akcja kupna ${cardName(card)}"
+    is BuyCardAction -> "Akcja kupna ${cardName(card)}, kasa: $money"
     is BuildLevelAction -> "Akcja budowy poziomu ${cardName(card)}"
-    is BuyLevelAction -> "Akcja kupna poziomu ${cardName(card)}, kasa: ${money}"
+    is BuyLevelAction -> "Akcja kupna poziomu ${cardName(card)}, kasa: $money"
     else -> toString()
 }
 

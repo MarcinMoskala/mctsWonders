@@ -4,6 +4,7 @@ import kotlinwonders.data.getStartGameState
 import kotlinwonders.functions.RealState
 import kotlinwonders.functions.getSplittedRandomStartCards
 import kotlinwonders.functions.simulateGame
+import kotlinwonders.player.HeuristicPlayer
 import kotlinwonders.player.Player
 import kotlinwonders.player.RandomPlayer
 import kotlinwonders.player.mcts.MctsPlayer
@@ -22,8 +23,8 @@ fun main(args: Array<String>) {
     var score = zeros(3)
     var games = 0
     println("Zaczynamy :)")
-    (1..100).forEach {
-        val newScore = play(MctsPlayer(10, { it > 10 }), RandomPlayer(), RandomPlayer())
+    (1..1000).forEach {
+        val newScore = play(MctsPlayer(5) { it > 1000 } , HeuristicPlayer(), HeuristicPlayer())
         score = listOf(score, newScore).sumLists()
         games ++
         println("Score: $score, Games: $games, Mean: ${score.map { it / games }}")

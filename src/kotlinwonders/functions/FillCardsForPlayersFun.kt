@@ -8,9 +8,9 @@ import org.testng.annotations.Test
 fun fillUnknownCardsForPlayers(knownCards: Map<Int, Cards>, gameState: GameState): List<Cards> {
     var randomCards: Cards = getAllPossibleCards(gameState, knownCards)
     val cardsToHave = 8 - gameState.round
-    return (0..(gameState.playersStates.size - 1)).map {
-        val cardsHeHave = knownCards[it] ?: emptyList()
-        val numCardsToGive = cardsToHave - (cardsHeHave.size)
+    return (0..(gameState.playersStates.size - 1)).map { id ->
+        val cardsHeHave = knownCards[id] ?: emptyList()
+        val numCardsToGive = cardsToHave - cardsHeHave.size
         val cardsForPlayer = randomCards.take(numCardsToGive) + cardsHeHave
         randomCards = randomCards.subList(numCardsToGive, randomCards.size)
         cardsForPlayer

@@ -18,6 +18,7 @@ import pl.marcinmoskala.kotlindownders.utills.biggestPlace
 fun Leaf.simulated(simulationsPerBranch: Int): BranchDecisionTree {
     val nextPlayerId = getNextPlayerId(actionsPlanned)
     return BranchDecisionTree(
+            actionsPlanned = actionsPlanned,
             visibleState = visibleState,
             gameResults = gameResults,
             kids = getAllOptimalActionsForPlayerState(nextPlayerId, visibleState).map { newAction ->

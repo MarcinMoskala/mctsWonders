@@ -9,13 +9,14 @@ import kotlinwonders.player.Player
 import org.testng.annotations.Test
 import pl.marcinmoskala.kotlindownders.utills.zeros
 
-class MctsPlayer(val simulationsPerBranch: Int, val endCalcFun: (Int)->Boolean) : Player {
+class MctsPlayer(val simulationsPerBranch: Int, val globalEndCalcFun: ((Int) -> Boolean)? = null) : Player {
 
     override fun makeDecision(actions: List<Action>, p: PlayerState, cards: List<Card>, gameState: GameState): Action =
             startMcts(gameState, mapOf(p.id to cards), p.id)
 
-    fun startMcts(gameState: GameState, knownCards: Map<Int, List<Card>>, id: Int): Action {
-        require(knownCards.all { it.value.size <= 8 - gameState.round }) { "GameState: $gameState, Known Cards: $knownCards" }
+    fun startMcts(gameState: GameState, knownCards: Map<Int, List<Card>>, id: Int, endCalcFun: ((Int) -> Boolean)? = globalEndCalcFun): Action {
+        require(knownCards[id]?.size == gameState.cardsOnHands)
+        endCalcFun!!
         var tree: DecisionTree = Leaf(VisibleState(gameState, knownCards))
         while (!endCalcFun(tree.gamesPlayed())) {
             tree = tree.improve(simulationsPerBranch)

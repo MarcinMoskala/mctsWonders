@@ -17,6 +17,7 @@ import kotlin.concurrent.thread
 class ChooseMultipleView : Application() {
 
     val allPlayers = (0..2).toList()
+    val mctsPlayer = MctsPlayer(1)
 
     @Throws(Exception::class)
     override fun start(primaryStage: Stage) {
@@ -30,10 +31,10 @@ class ChooseMultipleView : Application() {
         askForCards(playerId, gameState, knownCards) { knownCards ->
             chooseAction(playerId, gameState, knownCards) { action ->
                 askForOtherPlayersActions(gameState, knownCards, action) { actions ->
-                    val actionMap = actions.toNonIndexedList()
+                    val actionList = actions.toNonIndexedList()
                     playNextRound(
-                            gameState = getNextGameState(gameState, actionMap),
-                            knownCards = knownCards.removeUsedCards(actionMap).giveCardsToNextPerson(gameState.age),
+                            gameState = getNextGameState(gameState, actionList),
+                            knownCards = knownCards.removeUsedCards(actionList).giveCardsToNextPerson(gameState.age),
                             playerId = playerId)
                 }
             }
@@ -52,7 +53,7 @@ class ChooseMultipleView : Application() {
 
     private fun startActionCalculation(gameState: GameState, knownCards: Map<Int, List<Card>>, playerId: Int, endCalcFun: (Int)->Boolean, actionCallback: (Action)->Unit) {
         thread {
-            val action = MctsPlayer(1, endCalcFun).startMcts(gameState, knownCards, playerId)
+            val action = mctsPlayer.startMcts(gameState, knownCards, playerId, endCalcFun)
             Platform.runLater { actionCallback(action) }
         }
     }
@@ -63,7 +64,7 @@ class ChooseMultipleView : Application() {
             callback(actions)
         else {
             val playerId = undecidedPlayers.first()
-            val options = getAllPossibleActionsForPlayerState(playerId, VisibleState(gameState, knownCards))
+            val options = getAllPossibleActionsForPlayerState(playerId, VisibleState(gameState, knownCards)).distinct()
             askPlayerForAction(playerId, options) { action ->
                 askForOtherPlayersActions(gameState, knownCards, actions + (playerId to action), callback)
             }
@@ -75,11 +76,17 @@ class ChooseMultipleView : Application() {
     }
 
     private fun askForCards(playerId: Int, gameState: GameState, knownCards: Map<Int, List<Card>>, callback: (Map<Int, List<Card>>) -> Unit) {
-        if (knownCards[playerId].isNullOrEmpty()) {
-            val options = getAllPossiblePlayerCards(playerId, gameState, knownCards)
-            openMultipleChooseWindow("Jakie masz karty?", options, gameState.cardsOnHands) { callback(knownCards + (playerId to it)) }
-        } else
+        val knownCardsNum = knownCards[playerId]?.size ?: 0
+        val cardsNeedToHave = gameState.cardsOnHands
+        if(knownCardsNum == cardsNeedToHave)
             callback(knownCards)
+        else {
+            val options = getAllPossiblePlayerCards(playerId, gameState, knownCards)
+            openMultipleChooseWindow("Jakie masz karty?", options, gameState.cardsOnHands) {
+                callback(knownCards + (playerId to it))
+            }
+        }
+
     }
 }
 
