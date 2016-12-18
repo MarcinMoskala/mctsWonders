@@ -5,8 +5,6 @@ import kotlinwonders.functions.action.getOptimalPlayerActions
 import kotlinwonders.functions.getSplittedRandomStartCards
 import kotlinwonders.player.HeuristicPlayer
 import kotlinwonders.player.Player
-import kotlinwonders.player.RandomPlayer
-import kotlinwonders.test.assertEquals
 import kotlinwonders.test.assertTheSameSet
 import kotlinwonders.test.cardsByName
 import org.testng.annotations.Test

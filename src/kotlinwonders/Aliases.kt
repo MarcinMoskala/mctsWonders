@@ -3,7 +3,6 @@ package kotlinwonders
 import kotlinwonders.data.Action
 import kotlinwonders.data.Card
 import kotlinwonders.data.PlayerState
-import kotlinwonders.player.Player
 import pl.marcinmoskala.kotlindownders.data.Res
 
 typealias Resources = List<Res>

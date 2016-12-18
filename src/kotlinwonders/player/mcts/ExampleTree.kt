@@ -4,7 +4,6 @@ import kotlinwonders.VisibleState
 import kotlinwonders.data.GameState
 import kotlinwonders.data.PlayerState
 import kotlinwonders.data.Wonder
-import kotlinwonders.data.getRandomWonder
 
 object ExampleTree {
 

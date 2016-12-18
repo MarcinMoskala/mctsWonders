@@ -5,7 +5,6 @@ import kotlinwonders.functions.getAllPossibleActionsForPlayerState
 import kotlinwonders.functions.getAllPossiblePlayerCards
 import kotlinwonders.functions.getNextGameState
 import kotlinwonders.functions.removeUsedCards
-import kotlinwonders.VisibleState
 import kotlinwonders.test.assertTheSame
 import org.testng.annotations.Test
 import pl.marcinmoskala.kotlindownders.functions.giveCardsToNextPerson

@@ -1,7 +1,7 @@
 package kotlinwonders.functions
 
-import kotlinwonders.data.*
 import kotlinwonders.VisibleState
+import kotlinwonders.data.*
 import kotlinwonders.test.OneCardSituation
 import kotlinwonders.test.assertContains
 import kotlinwonders.test.cardByName

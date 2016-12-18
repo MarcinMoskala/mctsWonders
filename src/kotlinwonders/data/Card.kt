@@ -42,9 +42,9 @@ data class Card(
                 Card(age = 1, name = "BATHS", resNeeded = listOf(STONE), points = 3, cardColour = BLUE),
                 Card(age = 1, name = "ALTAR", points = 2, cardColour = BLUE),
                 Card(age = 1, name = "THEATER", points = 2, cardColour = BLUE),
-                Card(age = 1, name = "EAST TRADING POST", specialAction = { player, neighbour -> player.copy(buyCost = player.buyCost + (neighbour[0].id to mapOf(CLAY to 1, WOOD to 1, STONE to 1, ORE to 1))) }, cardColour = YELLOW), //TODO
-                Card(age = 1, name = "WEST TRADING POST", specialAction = { player, neighbour -> player.copy(buyCost = player.buyCost + (neighbour[1].id to mapOf(CLAY to 1, WOOD to 1, STONE to 1, ORE to 1))) }, cardColour = YELLOW), //TODO
-                Card(age = 1, name = "MARKETPLACE", specialAction = { player, neighbour -> player.copy(buyCost = player.buyCost + (neighbour[0].id to mapOf(GLASS to 1, LOOM to 1, PAPYRUS to 1)) + (neighbour[1].id to mapOf(GLASS to 1, LOOM to 1, PAPYRUS to 1))) }, cardColour = YELLOW), //TODO
+                Card(age = 1, name = "EAST TRADING POST", specialAction = { player, neighbour -> player.copy(buyCost = player.buyCost + (neighbour[0].id to mapOf(CLAY to 1, WOOD to 1, STONE to 1, ORE to 1))) }, cardColour = YELLOW),
+                Card(age = 1, name = "WEST TRADING POST", specialAction = { player, neighbour -> player.copy(buyCost = player.buyCost + (neighbour[1].id to mapOf(CLAY to 1, WOOD to 1, STONE to 1, ORE to 1))) }, cardColour = YELLOW),
+                Card(age = 1, name = "MARKETPLACE", specialAction = { player, neighbour -> player.copy(buyCost = player.buyCost + (neighbour[0].id to mapOf(GLASS to 1, LOOM to 1, PAPYRUS to 1)) + (neighbour[1].id to mapOf(GLASS to 1, LOOM to 1, PAPYRUS to 1))) }, cardColour = YELLOW),
                 Card(age = 1, name = "STOCKADE", resNeeded = listOf(WOOD), fight = 1, cardColour = RED),
                 Card(age = 1, name = "BARRACKS", resNeeded = listOf(ORE), fight = 1, cardColour = RED),
                 Card(age = 1, name = "GUARD TOWER", resNeeded = listOf(CLAY), fight = 1, cardColour = RED),

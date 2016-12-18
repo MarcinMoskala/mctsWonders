@@ -3,7 +3,10 @@ package kotlinwonders.player
 import kotlinwonders.Actions
 import kotlinwonders.Cards
 import kotlinwonders.PlayersStates
-import kotlinwonders.data.*
+import kotlinwonders.data.Action
+import kotlinwonders.data.BurnCardAction
+import kotlinwonders.data.GameState
+import kotlinwonders.data.PlayerState
 import kotlinwonders.functions.action.applyAction
 import pl.marcinmoskala.kotlindownders.functions.countPoints
 import java.util.*

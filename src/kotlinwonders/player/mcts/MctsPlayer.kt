@@ -7,7 +7,6 @@ import kotlinwonders.data.GameState
 import kotlinwonders.data.PlayerState
 import kotlinwonders.player.Player
 import org.testng.annotations.Test
-import pl.marcinmoskala.kotlindownders.utills.zeros
 
 class MctsPlayer(val simulationsPerBranch: Int, val globalEndCalcFun: ((Int) -> Boolean)? = null) : Player {
 

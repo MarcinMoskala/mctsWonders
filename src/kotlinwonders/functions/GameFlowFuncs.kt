@@ -1,14 +1,14 @@
 package kotlinwonders.functions
 
-import kotlinwonders.*
-import kotlinwonders.data.*
-import kotlinwonders.functions.action.applyAction
+import kotlinwonders.Cards
+import kotlinwonders.VisibleState
+import kotlinwonders.data.Action
+import kotlinwonders.data.GameState
+import kotlinwonders.getAction
+import kotlinwonders.getNextRoundCardsOnHand
 import kotlinwonders.player.Player
 import kotlinwonders.player.mcts.add
-import kotlinwonders.player.mcts.getNextPlayerId
-import kotlinwonders.test.assertEquals
 import org.testng.annotations.Test
-import pl.marcinmoskala.kotlindownders.functions.giveFightPoints
 
 fun makeActionsAndThenSimulateRandomGame(visibleState: VisibleState, actionsMap: Map<Int, Action>, players: List<Player>): GameState {
     val knownAndSupposedCards = visibleState.knownCards add actionsMap.mapValues { listOf(it.value.card) }
