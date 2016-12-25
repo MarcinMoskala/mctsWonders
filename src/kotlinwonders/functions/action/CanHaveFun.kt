@@ -7,12 +7,13 @@ import org.testng.annotations.Test
 import pl.marcinmoskala.kotlindownders.data.Res
 import java.util.*
 
-internal fun canHave(need: Resources, have: Mines): Boolean = when {
+fun canHave(need: Resources, have: Mines): Boolean = when {
     need.isEmpty() -> true
     have.isEmpty() || have.size < need.size -> false
+    have[0].none { it in need } -> canHave(need, have.drop(1))
     else -> have[0]
             .filter { it in need }
-            .any { r -> canHave(need.minus(r), have.drop(1)) } || canHave(need, have.drop(1))
+            .any { r -> canHave(need.minus(r), have.drop(1)) }
 }
 
 class CanHaveTest {

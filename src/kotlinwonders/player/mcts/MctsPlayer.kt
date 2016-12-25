@@ -6,9 +6,16 @@ import kotlinwonders.data.Card
 import kotlinwonders.data.GameState
 import kotlinwonders.data.PlayerState
 import kotlinwonders.player.Player
+import kotlinwonders.player.RandomPlayer
 import org.testng.annotations.Test
 
-class MctsPlayer(val simulationsPerBranch: Int, val globalEndCalcFun: ((Int) -> Boolean)? = null) : Player {
+class MctsPlayer(
+        val simulationsPerBranch: Int,
+        getOtherPlayer: ()->Player = { RandomPlayer() },
+        val globalEndCalcFun: ((Int) -> Boolean)? = null
+) : Player {
+
+    val players = (1..3).map { getOtherPlayer() }
 
     override fun makeDecision(actions: List<Action>, p: PlayerState, cards: List<Card>, gameState: GameState): Action =
             startMcts(gameState, mapOf(p.id to cards), p.id)
@@ -17,8 +24,8 @@ class MctsPlayer(val simulationsPerBranch: Int, val globalEndCalcFun: ((Int) -> 
         require(knownCards[id]?.size == gameState.cardsOnHands)
         endCalcFun!!
         var tree: DecisionTree = Leaf(VisibleState(gameState, knownCards))
-        while (!endCalcFun(tree.gamesPlayed())) {
-            tree = tree.improve(simulationsPerBranch)
+        while (!endCalcFun(tree.gamesPlayed() * simulationsPerBranch)) {
+            tree = tree.improve(simulationsPerBranch, players)
         }
         return tree.chooseBestDecision(id)
     }

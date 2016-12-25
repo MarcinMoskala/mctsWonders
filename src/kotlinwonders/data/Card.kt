@@ -107,7 +107,7 @@ data class Card(
             1 -> age1
             2 -> age2
             3 -> age3
-            else -> throw Error("No such age")
+            else -> listOf()
         }
     }
 }

@@ -2,10 +2,10 @@ package kotlinwonders.functions
 
 import kotlinwonders.Cards
 import kotlinwonders.VisibleState
-import kotlinwonders.data.Action
-import kotlinwonders.data.GameState
-import kotlinwonders.getAction
+import kotlinwonders.data.*
+import kotlinwonders.functions.action.getOptimalPlayerActions
 import kotlinwonders.getNextRoundCardsOnHand
+import kotlinwonders.getRandomPlayers
 import kotlinwonders.player.Player
 import kotlinwonders.player.mcts.add
 import org.testng.annotations.Test
@@ -19,10 +19,10 @@ fun makeActionsAndThenSimulateRandomGame(visibleState: VisibleState, actionsMap:
 }
 
 /*
-    Function to simulate game from this particular moment.
+    Function to simulateMcts game from this particular moment.
  */
 tailrec fun simulateGame(realState: RealState, players: List<Player>): GameState {
-    if (realState.gameState.isFinal) return realState.gameState
+    if(realState.cardsOnHands.isEmpty()) return realState.gameState
     val actions = players.indices.map { getAction(realState.gameState.playersStates[it], players[it], realState.gameState, realState.cardsOnHands[it]) }
     val newRealState = newStateForActions(realState, actions)
     return simulateGame(newRealState, players)
@@ -37,8 +37,15 @@ private fun newStateForActions(realState: RealState, actions: List<Action>): Rea
     return RealState(newGameState, newCardsOnHands)
 }
 
+private fun getAction(playerState: PlayerState, player: Player, gameState: GameState, cards: Cards): Action {
+    val neighbors = getNeighbors(playerState, gameState.playersStates)
+    val playerActions = getOptimalPlayerActions(cards, playerState, neighbors)
+    return player.makeDecision(playerActions, playerState, cards, gameState)
+}
+
 class TestGameFlow() {
     @Test fun simpleTest() {
-
+        val finalState = simulateGame(RealState(getStartGameState(3), getSplittedRandomStartCards(1, 3)), getRandomPlayers(3))
+        println(finalState)
     }
 }

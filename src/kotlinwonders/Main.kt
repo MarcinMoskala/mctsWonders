@@ -20,15 +20,25 @@ private fun play(vararg players: Player): List<Int> {
 }
 
 fun main(args: Array<String>) {
-    var score = zeros(3)
     var games = 0
     println("Zaczynamy :)")
-    (1..1000).forEach {
-        val newScore = play(MctsPlayer(5) { it > 1000 } , HeuristicPlayer(), HeuristicPlayer())
-        score = listOf(score, newScore).sumLists()
-        games ++
-        println("Score: $score, Games: $games, Mean: ${score.map { it / games }}")
+    println("MCTS Random vs Random")
+    simulateNormal(10, { MctsPlayer(1, { RandomPlayer() }, { it > 200 }) }, { RandomPlayer() })
+    println("MCTS Heuristic vs Random")
+    simulateNormal(10, { MctsPlayer(1, { HeuristicPlayer() }, { it > 200 }) }, { RandomPlayer() })
+    println("MCTS Random vs Heuristic")
+    simulateNormal(10, { MctsPlayer(1, { RandomPlayer() }, { it > 200 }) }, { HeuristicPlayer() })
+    println("MCTS Heuristic vs Heuristic")
+    simulateNormal(10, { MctsPlayer(1, { HeuristicPlayer() }, { it > 200 }) }, { HeuristicPlayer() })
+}
+
+private fun simulateNormal(games: Int, getOne: () -> Player, getOthers: () -> Player) {
+    val score = (1..games).fold(zeros(3)) { score, i ->
+        val newScore = play(getOne(), getOthers(), getOthers())
+        if(games < 15) println("Score: $newScore")
+        listOf(score, newScore).sumLists()
     }
+    println("Mean player score: ${score[0].toFloat() / games}, mean others: ${(score[1] + score[2]).toFloat() / (2 * games)}")
 }
 
 class GameTest {

@@ -47,14 +47,14 @@ class ChooseMultipleView : Application() {
     private fun chooseAction(playerId: Int, gameState: GameState, knownCards: Map<Int, List<Card>>, callback: (Map<Int, Action>) -> Unit) {
         var stop = false
         showButton("Kiedy skończyć obliczenia?", "Teraz", { stop = true })
-        startActionCalculation(gameState, knownCards, playerId, { stop }) { action ->
+        startActionCalculation(gameState, knownCards, playerId, { stop && it > 1000 }) { action ->
             showButton("Wybrana akcja to $action", "Ok") {
                 callback(mapOf(playerId to action))
             }
         }
     }
 
-    private fun startActionCalculation(gameState: GameState, knownCards: Map<Int, List<Card>>, playerId: Int, endCalcFun: (Int)->Boolean, actionCallback: (Action)->Unit) {
+    private fun startActionCalculation(gameState: GameState, knownCards: Map<Int, List<Card>>, playerId: Int, endCalcFun: (Int) -> Boolean, actionCallback: (Action) -> Unit) {
         thread {
             val action = mctsPlayer.startMcts(gameState, knownCards, playerId, endCalcFun)
             Platform.runLater { actionCallback(action) }
@@ -81,15 +81,16 @@ class ChooseMultipleView : Application() {
     private fun askForCards(playerId: Int, gameState: GameState, knownCards: Map<Int, List<Card>>, callback: (Map<Int, List<Card>>) -> Unit) {
         val knownCardsNum = knownCards[playerId]?.size ?: 0
         val cardsNeedToHave = gameState.cardsOnHands
-        if(knownCardsNum == cardsNeedToHave)
-            callback(knownCards)
-        else {
-            val options = getAllPossiblePlayerCards(playerId, gameState, knownCards)
-            openMultipleChooseWindow("Jakie masz karty?", options, gameState.cardsOnHands) {
-                callback(knownCards + (playerId to it))
+        val options = getAllPossiblePlayerCards(playerId, gameState, knownCards)
+        when {
+            knownCardsNum == cardsNeedToHave -> callback(knownCards)
+            options.size == cardsNeedToHave -> callback(knownCards + (playerId to options))
+            else -> {
+                openMultipleChooseWindow("Jakie masz karty?", options, gameState.cardsOnHands) {
+                    callback(knownCards + (playerId to it))
+                }
             }
         }
-
     }
 }
 
