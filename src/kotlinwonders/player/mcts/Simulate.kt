@@ -40,7 +40,6 @@ private fun getAllOptimalActionsForPlayerState(id: Int, visibleState: VisibleSta
 
 private fun createLeaf(visibleState: VisibleState, actionsPlanned: Map<Int, Action>, simulationsPerBranch: Int, players: List<Player>): Leaf {
     val (newVisibleState, newActionsPlanned) = nextVisibleState(actionsPlanned, visibleState)
-    // !!! A wymiana kart, kórwo? !!!
     val newGameResults = getGameResult(newActionsPlanned, newVisibleState, simulationsPerBranch, players)
     return Leaf(newVisibleState, newActionsPlanned, newGameResults)
 }
@@ -56,12 +55,13 @@ private fun getGameResult(actions: Map<Int, Action>, visibleState: VisibleState,
 private fun nextVisibleState(actions: Map<Int, Action>, visibleState: VisibleState): Pair<VisibleState, Map<Int, Action>> =
         if (visibleState.playersIds.all { it in actions.keys }) {
             val nextGameState = getNextGameState(visibleState.gameState, visibleState.playersIds.map { actions[it]!! })
+            val actionsCards = actions.values.map { it.card }
             val newKnownCards = visibleState.playersIds
-                    .map { visibleState.knownCards[it] ?: emptyList() }
+                    .map { visibleState.knownCards[it]?.minus(actionsCards) ?: emptyList<Card>() }
                     .giveCardsToNextPerson(visibleState.gameState.age)
-                    .filter { it.isEmpty() }
                     .toIndexMap()
             VisibleState(nextGameState, newKnownCards) to mapOf()
+            // !!! Wykonuje ostatnią akcję w 3,6 i puszcza make action and simulate card na pusto co wysypuje program
         } else visibleState to actions
 
 class TestAllOptimalActions() {
