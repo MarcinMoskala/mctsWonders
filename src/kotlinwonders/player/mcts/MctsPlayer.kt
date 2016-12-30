@@ -24,7 +24,7 @@ class MctsPlayer(
         require(knownCards[id]?.size == gameState.cardsOnHands)
         endCalcFun!!
         var tree: DecisionTree = Leaf(VisibleState(gameState, knownCards))
-        while (!endCalcFun(tree.gamesPlayed() * simulationsPerBranch)) {
+        while (!endCalcFun(tree.gamesPlayed())) {
             tree = tree.improve(simulationsPerBranch, players)
         }
         return tree.chooseBestDecision(id)

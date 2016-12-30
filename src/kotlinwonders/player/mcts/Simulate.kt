@@ -17,7 +17,7 @@ import pl.marcinmoskala.kotlindownders.functions.giveCardsToNextPerson
 import pl.marcinmoskala.kotlindownders.utills.biggestPlace
 
 fun Leaf.simulated(simulationsPerBranch: Int, players: List<Player>): DecisionTree {
-    if (visibleState.gameState.isFinal && actionsPlanned.keys.size == players.size) {
+    if (isFinal) {
         val newGameResults = getGameResult(actionsPlanned, visibleState, simulationsPerBranch, players)
         return copy(gameResults = listOf(gameResults, newGameResults).sumLists())
     } else {
@@ -48,7 +48,6 @@ private fun getGameResult(actions: Map<Int, Action>, visibleState: VisibleState,
     return (1..simulationsPerBranch)
             .map { makeActionsAndThenSimulateRandomGame(visibleState, actions, players) }
             .map { countFinalPoints(it.playersStates) }
-            .map(::biggestPlace)
             .sumLists()
 }
 

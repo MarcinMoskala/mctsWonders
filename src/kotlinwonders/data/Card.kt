@@ -98,7 +98,7 @@ data class Card(
                 Card(age = 3, name = "OBSERVATORY", resNeeded = listOf(ORE, ORE, GLASS, LOOM), guild = setOf(GEAR), prevName = "LABORATORY", cardColour = GREEN),
                 Card(age = 3, name = "UNIVERSITY", resNeeded = listOf(WOOD, WOOD, PAPYRUS, GLASS), guild = setOf(TABLE), prevName = "LIBRARY", cardColour = GREEN),
                 Card(age = 3, name = "ACADEMY", resNeeded = listOf(STONE, STONE, STONE, GLASS), guild = setOf(COMPASS), prevName = "SCHOOL", cardColour = GREEN),
-                Card(age = 3, name = "SCHOOL", resNeeded = listOf(WOOD, PAPYRUS, LOOM), guild = setOf(GEAR), prevName = "SCHOOL", cardColour = GREEN)
+                Card(age = 3, name = "SCHOOL2", resNeeded = listOf(WOOD, PAPYRUS, LOOM), guild = setOf(GEAR), prevName = "SCHOOL", cardColour = GREEN)
         )
 
         fun cards() = age1 + age2 + age3

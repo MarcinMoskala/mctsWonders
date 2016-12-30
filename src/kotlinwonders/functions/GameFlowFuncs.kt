@@ -12,10 +12,8 @@ import org.testng.annotations.Test
 
 // Problem: Dla wszystkich akcji wykonanych w ostatnim stanie były próby wykonywania jeszcze akcji.
 fun makeActionsAndThenSimulateRandomGame(visibleState: VisibleState, actionsMap: Map<Int, Action>, players: List<Player>): GameState {
-    // TODO czy nie ujmuje sytuacji wcześniejszej?
     if(actionsMap.isEmpty() && visibleState.gameState.isFinal) return visibleState.gameState
     val knownAndSupposedCards = visibleState.knownCards add actionsMap.mapValues { listOf(it.value.card) }
-//    println("Visible state: $visibleState, \nactions map: $actionsMap, \nknownAndSupposedCards: $knownAndSupposedCards")
     val cardsOnHands = fillUnknownCardsForPlayers(knownAndSupposedCards, visibleState.gameState)
     val actions = players.indices.map { actionsMap[it] ?: getAction(visibleState.gameState.playersStates[it], players[it], visibleState.gameState, cardsOnHands[it]) }
     val newRealState = newStateForActions(RealState(visibleState.gameState, cardsOnHands), actions)

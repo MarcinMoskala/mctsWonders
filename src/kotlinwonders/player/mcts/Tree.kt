@@ -21,6 +21,9 @@ data class Leaf(
 //    override fun toString(): String = "GR: $gameResults, GP: ${gamesPlayed()}, A: $actionsPlanned"
     override fun gamesWon(id: Int): Int = gameResults[id]
     override fun gamesPlayed(): Int = gameResults.sum()
+
+    val isFinal: Boolean
+        get() = visibleState.gameState.isFinal && actionsPlanned.keys.size == visibleState.playersNum
 }
 
 data class BranchDecisionTree(

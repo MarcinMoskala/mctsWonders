@@ -60,5 +60,5 @@ val cardTranslationsToPolish = mapOf(
         "OBSERVATORY" to "OBSERWATORIUM",
         "UNIVERSITY" to "UNIWERSYTET",
         "ACADEMY" to "AKADEMIA",
-        "SCHOOL" to "PRACOWNIA"
+        "SCHOOL2" to "PRACOWNIA"
 )

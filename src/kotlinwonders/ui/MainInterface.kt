@@ -31,6 +31,7 @@ class ChooseMultipleView : Application() {
     private fun getIndexedEmptyCards(i: Int): Map<Int, List<Card>> = (0..(i - 1)).map { it to emptyList<Card>() }.toMap()
 
     private fun playNextRound(gameState: GameState, knownCards: Map<Int, List<Card>>, playerId: Int) {
+        println(gameState)
         askForCards(playerId, gameState, knownCards) { knownCards ->
             chooseAction(playerId, gameState, knownCards) { action ->
                 askForOtherPlayersActions(gameState, knownCards, action) { actions ->
@@ -48,7 +49,7 @@ class ChooseMultipleView : Application() {
         var stop = false
         showButton("Kiedy skończyć obliczenia?", "Teraz", { stop = true })
         startActionCalculation(gameState, knownCards, playerId, { stop && it > 1000 }) { action ->
-            showButton("Wybrana akcja to $action", "Ok") {
+            showButton("Wybrana akcja to ${action.display()}", "Ok") {
                 callback(mapOf(playerId to action))
             }
         }
